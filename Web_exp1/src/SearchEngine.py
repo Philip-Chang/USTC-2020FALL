@@ -28,6 +28,7 @@ def SearchTFIDF(inputStr):
         for fileName in files:
             if(fileName == 'addr_mapping.json'):
                 continue
+            print(fileName)
             fo = pd.read_csv(root + '/' + fileName)
             tfidfMat = np.array(fo)
             # drop term index, each row is tf-idf vec of a file
@@ -40,12 +41,17 @@ def SearchTFIDF(inputStr):
                 correlation = np.dot(searchVec, tfidfMat[MAT_INDEX]) / mode_tmp
                 if(correlation > 0):
                     returnDir.append((MAT_FILE_NUM, MAT_INDEX, correlation))
-            break
     returnDir.sort(key=lambda x:x[2], reverse=True)
+    returnDir = returnDir[:10]
+    FILE = []
     for returnFile in returnDir:
         FILE_CODE = str(returnFile[0]) + '_' + str(returnFile[1])
         FILE_ADDR = ADDR_MAPPING[FILE_CODE]
+        FILE.append(FILE_ADDR)
         print(FILE_ADDR)
+    
+    
+
     
 
 if __name__ == '__main__':
