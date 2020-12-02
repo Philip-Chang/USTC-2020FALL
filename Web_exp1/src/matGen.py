@@ -9,7 +9,7 @@ MATRIX_PATH = "D:/Users/Desktop/Web/exp1/output/matrix/"
 FULL_DICT = {}
 
 TOTAL_FILE_NUM = 517401
-MAX_MAT_SIZE = 10000
+MAX_MAT_SIZE = 50000
 MAT_INDEX = 0
 MAT_FILE_NUM = 0
 TMP_NUM = 0

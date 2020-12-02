@@ -48,7 +48,7 @@ def SearchTFIDF(inputStr):
         FILE_CODE = str(returnFile[0]) + '_' + str(returnFile[1])
         FILE_ADDR = ADDR_MAPPING[FILE_CODE]
         FILE.append(FILE_ADDR)
-        print(FILE_ADDR)
+    print(FILE)
 
 def calculateBool(termStack, operStack, operation):
     # calculate current result in the stack
@@ -99,13 +99,12 @@ def SearchBool(inputStr):
             for word in query:
                 if(word == '('):
                     operStack.append(word)
-                if(word == ')'):
-                    # pop ')' and '('
-                    operStack.pop()
+                elif(word == ')'):
+                    # pop '('
                     operStack.pop()
                     if(operStack[-1] == 'AND' or operStack[-1] == 'OR' or operStack[-1] == 'NOT'):
                         calculateBool(termStack, operStack, operStack.pop())
-                if(word == 'AND' or word == 'OR' or word == 'NOT'):
+                elif(word == 'AND' or word == 'OR' or word == 'NOT'):
                     operStack.append(word)
                 else:
                     termStack.append(list(tfidfMat[KEYS.index(word)]))
@@ -122,7 +121,7 @@ def SearchBool(inputStr):
             FILE_CODE = str(returnFile[0]) + '_' + str(returnFile[1])
             FILE_ADDR = ADDR_MAPPING[FILE_CODE]
             FILE.append(FILE_ADDR)
-            print(FILE_ADDR)
+        print(FILE[:10])
 
 if __name__ == '__main__':
     fo = open(MAPPING_FILE, 'r')
@@ -137,10 +136,11 @@ if __name__ == '__main__':
     KEYS = list(FULL_DICT.keys())
     # print(KEYS[-1])
     window = tkinter.Tk()
+    window.geometry("500x250")
     searchWords = tkinter.Entry(window, bd=5)
     searchWords.pack()
     confirmButtomTFIDF = tkinter.Button(window, text='SearchTFIDF', command=lambda : SearchTFIDF(searchWords.get()))
-    confirmButtomTFIDF.pack()
+    confirmButtomTFIDF.pack(side='left')
     confirmButtomBOOL = tkinter.Button(window, text='SearchBool', command=lambda : SearchBool(searchWords.get()))
-    confirmButtomBOOL.pack()
+    confirmButtomBOOL.pack(side='right')
     window.mainloop()
